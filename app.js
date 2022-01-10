@@ -26,23 +26,34 @@ function UI() {
 
     // Show Alert
     UI.prototype.showAlert = function(message, className) {
-        // Create div
-        const div = document.createElement('div');
-        // Add class
-        div.className = `alert ${className}`;
-        // Add text
-        div.appendChild(document.createTextNode(message));
-        // Get parent
-        const container = document.querySelector('.container');
-        // Get form
-        const form = document.querySelector('#book-form');
-        // Insert alert
-        container.insertBefore(div, form);
+            // Create div
+            const div = document.createElement('div');
+            // Add class
+            div.className = `alert ${className}`;
+            // Add text
+            div.appendChild(document.createTextNode(message));
+            // Get parent
+            const container = document.querySelector('.container');
+            // Get form
+            const form = document.querySelector('#book-form');
+            // Insert alert
+            container.insertBefore(div, form);
 
-        // Set timeout
-        setTimeout(function() {
-            document.querySelector('.alert').remove();
-        }, 3000);
+            // Set timeout
+            setTimeout(function() {
+                document.querySelector('.alert').remove();
+            }, 3000);
+    }
+
+
+
+    // Delete book
+    UI.prototype.deleteBook = function(target) {   
+        
+        if (target.className === 'delete') {
+            target.parentElement.parentElement.remove();
+        }
+
     }
 
 
@@ -86,6 +97,18 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
                   }
 
                
+
+    e.preventDefault();
+});
+
+// Event Listener for delete
+document.getElementById('book-list').addEventListener('click', function (e) {
+
+    const ui = new UI();
+    // Delete book
+    ui.deleteBook(e.target);
+    // Show message
+    ui.showAlert('Book Removed!', 'success');
 
     e.preventDefault();
 });
